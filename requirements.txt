@@ -16,8 +16,12 @@ redis==5.0.1
 
 # ML / training
 tensorflow==2.13.1
+typing-extensions==4.5.0
 
 # Tooling
 rich==13.7.1
 pyyaml==6.0.1
 tqdm==4.66.4
+
+# Testing
+pytest==7.4.4
