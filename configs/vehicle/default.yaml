@@ -1,0 +1,14 @@
+# Vehicle defaults (minimal placeholder)
+vehicle:
+  name: "autoavoider_car"
+  wheelbase_m: 0.26
+  track_width_m: 0.18
+
+actuation:
+  interface: "mock"
+  max_throttle: 1.0
+  max_steer: 1.0
+
+sensors:
+  imu: true
+  odom: true
