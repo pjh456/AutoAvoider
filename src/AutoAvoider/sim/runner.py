@@ -6,13 +6,29 @@ import argparse
 
 from AutoAvoider.common.config import load_yaml
 from AutoAvoider.common.logging import setup_logging
+from AutoAvoider.sim.mock_env import MockSimEnvironment
 
 
 def run_sim(config_path: str) -> None:
     logger = setup_logging(name="autoavoider.sim.runner")
     cfg = load_yaml(config_path)
     logger.info("Loaded config: %s", config_path)
-    logger.info("Simulation scaffold ready. No backend attached yet.")
+
+    sim_cfg = cfg.get("sensors", {}).get("stereo", {})
+    width = int(sim_cfg.get("resolution", {}).get("width", 640))
+    height = int(sim_cfg.get("resolution", {}).get("height", 480))
+
+    env = MockSimEnvironment(width=width, height=height)
+    obs = env.reset()
+    logger.info("Mock env reset, obs keys: %s", list(obs.keys()))
+
+    done = False
+    while not done:
+        obs, info, done, meta = env.step({"throttle": 0.0, "steer": 0.0})
+        if meta.get("step") % 10 == 0:
+            logger.info("Step %s info=%s", meta.get("step"), info)
+
+    logger.info("Simulation finished.")
 
 
 def build_arg_parser() -> argparse.ArgumentParser:
