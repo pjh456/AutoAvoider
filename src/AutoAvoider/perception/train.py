@@ -12,6 +12,7 @@ from AutoAvoider.common.config import load_yaml
 from AutoAvoider.common.logging import setup_logging
 from AutoAvoider.perception.datastore import TubGroup
 from AutoAvoider.perception.models.pilot import KerasCategorical
+from AutoAvoider.perception.transforms import linear_bin
 
 
 def run_train(config_path: str) -> None:
@@ -35,21 +36,38 @@ def run_train(config_path: str) -> None:
 
     x_keys = ["cam/image_array"]
     y_keys = ["user/angle", "user/throttle"]
+    use_smooth = bool(train_cfg.get("use_smooth", False))
+    if use_smooth:
+        y_keys.append("user/sth")
 
     batch_size = int(train_cfg.get("batch_size", 64))
     train_split = float(train_cfg.get("train_split", 0.8))
+
+    def train_record_transform(record: dict) -> dict:
+        record["user/angle"] = linear_bin(record["user/angle"])
+        if use_smooth:
+            record["user/sth"] = linear_bin(record["user/sth"])
+        return record
+
+    def val_record_transform(record: dict) -> dict:
+        record["user/angle"] = linear_bin(record["user/angle"])
+        if use_smooth:
+            record["user/sth"] = linear_bin(record["user/sth"])
+        return record
 
     train_gen, val_gen = tubgroup.get_train_val_gen(
         X_keys=x_keys,
         Y_keys=y_keys,
         batch_size=batch_size,
         train_frac=train_split,
+        train_record_transform=train_record_transform,
+        val_record_transform=val_record_transform,
     )
 
     model = KerasCategorical(
         resolution=resolution,
         neural_function=model_name,
-        use_smooth=False,
+        use_smooth=use_smooth,
     )
 
     output_dir = data_cfg.get("output_dir", "data/models")
