@@ -19,6 +19,7 @@ This document describes the minimal configuration files and their fields. The fo
 - `training.batch_size`: Training batch size.
 - `training.epochs`: Training epochs.
 - `training.train_split`: Train/val split ratio.
+- `training.use_smooth`: Whether to include lateral smoothing output.
 - `data.raw_dir`: Raw dataset path.
 - `data.processed_dir`: Processed dataset path.
 - `data.output_dir`: Output path for trained models.

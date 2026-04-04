@@ -19,6 +19,7 @@
 - `training.batch_size`: 训练批大小。
 - `training.epochs`: 训练轮数。
 - `training.train_split`: 训练/验证划分比例。
+- `training.use_smooth`: 是否启用横移/平滑输出。
 - `data.raw_dir`: 原始数据路径。
 - `data.processed_dir`: 处理后数据路径。
 - `data.output_dir`: 训练模型输出路径。
