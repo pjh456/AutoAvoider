@@ -1,0 +1,15 @@
+# Simulation defaults (minimal placeholder)
+scene:
+  name: "empty_world"
+  seed: 42
+
+sensors:
+  stereo:
+    enabled: true
+    baseline_m: 0.12
+    resolution:
+      width: 640
+      height: 480
+
+output:
+  data_dir: "data/raw"

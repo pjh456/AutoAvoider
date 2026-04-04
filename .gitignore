@@ -41,3 +41,6 @@ Thumbs.db
 # Data / models
 /data/
 /models/
+
+# Local configs
+/configs/**/local*.yaml
