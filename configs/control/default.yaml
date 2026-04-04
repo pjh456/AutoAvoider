@@ -1,0 +1,9 @@
+# Control defaults (minimal placeholder)
+control:
+  rate_hz: 20
+  max_speed: 1.0
+  max_steer: 1.0
+
+safety:
+  emergency_stop_distance_m: 0.4
+  slow_down_distance_m: 0.8
