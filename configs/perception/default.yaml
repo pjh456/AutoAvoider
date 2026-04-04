@@ -1,0 +1,17 @@
+# Perception defaults (minimal placeholder)
+model:
+  name: "baseline_cnn"
+  input:
+    width: 640
+    height: 480
+    channels: 3
+
+training:
+  batch_size: 64
+  epochs: 50
+  train_split: 0.8
+
+data:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  output_dir: "data/models"
