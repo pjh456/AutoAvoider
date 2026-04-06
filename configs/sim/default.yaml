@@ -13,3 +13,4 @@ sensors:
 
 output:
   data_dir: "data/raw"
+  max_records: 100
