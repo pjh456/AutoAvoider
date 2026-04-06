@@ -5,6 +5,9 @@ model:
     width: 640
     height: 480
     channels: 3
+  input_keys:
+    - "cam/left_image"
+    - "cam/right_image"
 
 training:
   batch_size: 64
