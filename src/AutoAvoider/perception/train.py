@@ -25,6 +25,13 @@ def _resolve_input_keys(tubgroup: TubGroup, model_cfg: dict) -> list:
     return ["cam/image_array"]
 
 
+def _validate_input_keys(tubgroup: TubGroup, x_keys: list) -> None:
+    inputs = set(tubgroup.inputs)
+    missing = [k for k in x_keys if k not in inputs]
+    if missing:
+        raise KeyError(f"Input keys not found in dataset: {missing}")
+
+
 def run_train(config_path: str) -> None:
     logger = setup_logging(name="autoavoider.perception.train")
     cfg = load_yaml(config_path)
@@ -45,6 +52,8 @@ def run_train(config_path: str) -> None:
     tubgroup = TubGroup(tub_paths)
 
     x_keys = _resolve_input_keys(tubgroup, model_cfg)
+    _validate_input_keys(tubgroup, x_keys)
+
     y_keys = ["user/angle", "user/throttle"]
     use_smooth = bool(train_cfg.get("use_smooth", False))
     if use_smooth:
