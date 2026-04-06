@@ -15,6 +15,16 @@ from AutoAvoider.perception.models.pilot import KerasCategorical
 from AutoAvoider.perception.transforms import linear_bin
 
 
+def _resolve_input_keys(tubgroup: TubGroup, model_cfg: dict) -> list:
+    configured = model_cfg.get("input_keys")
+    if isinstance(configured, list) and configured:
+        return configured
+    inputs = set(tubgroup.inputs)
+    if "cam/left_image" in inputs and "cam/right_image" in inputs:
+        return ["cam/left_image", "cam/right_image"]
+    return ["cam/image_array"]
+
+
 def run_train(config_path: str) -> None:
     logger = setup_logging(name="autoavoider.perception.train")
     cfg = load_yaml(config_path)
@@ -34,7 +44,7 @@ def run_train(config_path: str) -> None:
     tub_paths = data_cfg.get("raw_dir", "data/raw")
     tubgroup = TubGroup(tub_paths)
 
-    x_keys = ["cam/image_array"]
+    x_keys = _resolve_input_keys(tubgroup, model_cfg)
     y_keys = ["user/angle", "user/throttle"]
     use_smooth = bool(train_cfg.get("use_smooth", False))
     if use_smooth:
