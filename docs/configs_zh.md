@@ -16,6 +16,7 @@
 - `model.input.width`: 输入图像宽度。
 - `model.input.height`: 输入图像高度。
 - `model.input.channels`: 输入图像通道数。
+- `model.input_keys`: 输入键列表（例如双目左/右图）。
 - `training.batch_size`: 训练批大小。
 - `training.epochs`: 训练轮数。
 - `training.train_split`: 训练/验证划分比例。

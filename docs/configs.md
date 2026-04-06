@@ -16,6 +16,7 @@ This document describes the minimal configuration files and their fields. The fo
 - `model.input.width`: Input image width.
 - `model.input.height`: Input image height.
 - `model.input.channels`: Input image channels.
+- `model.input_keys`: Input tensor keys (e.g., stereo left/right).
 - `training.batch_size`: Training batch size.
 - `training.epochs`: Training epochs.
 - `training.train_split`: Train/val split ratio.
